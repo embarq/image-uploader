@@ -17,7 +17,16 @@ module.exports = {
         current: 'currentColor',
         black: colors.black,
         white: colors.white,
-        gray: colors.neutral,
+        gray: {
+					...colors.neutral,
+					light: '#F6F8FB',
+					medium: '#BDBDBD',
+					blueish: '#97BEF4',
+				},
+				blue: {
+					...colors.neutral,
+					grayish: '#2F80ED'
+				}
       },
 		},
 	},
