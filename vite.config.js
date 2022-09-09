@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import loadVersion from 'vite-plugin-package-version'
 import path from 'path'
@@ -7,6 +7,7 @@ import path from 'path'
 export default defineConfig({
   plugins: [
     vue(),
+    splitVendorChunkPlugin(),
     loadVersion(),
   ],
   resolve: {
