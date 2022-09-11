@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL
+
 export const uploadFile = async (file) => {
   const formData = new FormData()
   formData.append('files', file)
@@ -7,10 +9,25 @@ export const uploadFile = async (file) => {
     body: formData
   }
 
-  return fetch(`${ import.meta.env.VITE_API_URL }/v1/image/upload`, req)
+  return fetch(`${ API_URL }/v1/image/upload`, req)
     .then(res => res.json())
 }
 
 export const getImageDisplayUrl = (filePayload) => {
-  return `${ import.meta.env.VITE_API_URL }/v1/image/${ filePayload.name }`
+  return `${ API_URL }/v1/image/${ filePayload.name }`
+}
+
+/**
+ * @param {string} captchaResponse
+ * @returns {Promise<{ status: 'success' | 'error', payload: { temp_token?: string } }>}
+ */
+export const getAccessToken = (captchaResponse) => {
+  const req = {
+    method: 'POST',
+    body: {
+      response: captchaResponse
+    }
+  }
+  return fetch(`${ API_URL }/v1/validate-recaptcha`, req)
+    .then(res => res.json())
 }

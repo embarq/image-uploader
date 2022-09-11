@@ -1,10 +1,11 @@
 <script setup>
   import { ref, computed } from 'vue'
-  import { uploadFile, getImageDisplayUrl } from '@/lib/api'
-  import { blobToBase64 } from '@/lib/utils'
+  import { uploadFile, getImageDisplayUrl, getAccessToken } from '@/lib/api'
+  import { blobToBase64, captchaReady } from '@/lib/utils'
   import { useClipboard } from '@vueuse/core'
   import FilePicker from './components/FilePicker.vue'
 
+  const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY
   const imageLink = ref(null)
   const imageUrl = ref(null)
   const imageAsBgUrl = computed(() => {
@@ -21,6 +22,18 @@
     imageLink.value = null
     uploadLoading.value = false
     uploadSuccess.value = false
+  }
+
+  const handleFileUpload = async (file) => {
+    const captcha = await captchaReady()
+    const captchaResponse = await captcha.execute(
+      RECAPTCHA_SITE_KEY,
+      { action: 'upload' }
+    )
+    const token = await getAccessToken(captchaResponse)
+    const res = await uploadFile(file, token)
+    const url = getImageDisplayUrl(res.payload)
+    return url
   }
 
   const handleFile = async (file) => {
@@ -40,11 +53,10 @@
     uploadSuccess.value = false
 
     try {
-      const res = await uploadFile(file)
-      const url = getImageDisplayUrl(res.payload)
+      const url = await handleFileUpload(file)
 
       imageLink.value = url
-      imageUrl.value = await fetch(url)
+      imageUrl.value = await fetch(url, { mode: 'no-cors' })
         .then(res => res.blob())
         .then(blob => blobToBase64(blob))
 
