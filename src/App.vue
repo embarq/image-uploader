@@ -31,8 +31,8 @@
         RECAPTCHA_SITE_KEY,
         { action: 'upload' }
       )
-      const token = await getAccessToken(captchaResponse)
-      const res = await uploadFile(file, token)
+      const { payload } = await getAccessToken(captchaResponse)
+      const res = await uploadFile(file, payload.temp_token)
       const url = getImageDisplayUrl(res.payload)
       return url
     } catch (error) {
