@@ -24,9 +24,13 @@ export const getImageDisplayUrl = (filePayload) => {
 export const getAccessToken = (captchaResponse) => {
   const req = {
     method: 'POST',
-    body: {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
       response: captchaResponse
-    }
+    })
   }
   return fetch(`${ API_URL }/v1/validate-recaptcha`, req)
     .then(res => res.json())
