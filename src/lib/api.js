@@ -1,11 +1,15 @@
 const API_URL = import.meta.env.VITE_API_URL
 
-export const uploadFile = async (file) => {
+export const uploadFile = async (file, token) => {
   const formData = new FormData()
   formData.append('files', file)
 
+  /** @type {ReqeustInit} */
   const req = {
     method: 'POST',
+    headers: {
+      'authorization': token,
+    },
     body: formData
   }
 
@@ -22,6 +26,7 @@ export const getImageDisplayUrl = (filePayload) => {
  * @returns {Promise<{ status: 'success' | 'error', payload: { temp_token?: string } }>}
  */
 export const getAccessToken = (captchaResponse) => {
+  /** @type {ReqeustInit} */
   const req = {
     method: 'POST',
     headers: {
