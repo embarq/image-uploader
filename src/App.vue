@@ -25,15 +25,19 @@
   }
 
   const handleFileUpload = async (file) => {
-    const captcha = await captchaReady()
-    const captchaResponse = await captcha.execute(
-      RECAPTCHA_SITE_KEY,
-      { action: 'upload' }
-    )
-    const token = await getAccessToken(captchaResponse)
-    const res = await uploadFile(file, token)
-    const url = getImageDisplayUrl(res.payload)
-    return url
+    try {
+      const captcha = await captchaReady()
+      const captchaResponse = await captcha.execute(
+        RECAPTCHA_SITE_KEY,
+        { action: 'upload' }
+      )
+      const token = await getAccessToken(captchaResponse)
+      const res = await uploadFile(file, token)
+      const url = getImageDisplayUrl(res.payload)
+      return url
+    } catch (error) {
+      throw error
+    }
   }
 
   const handleFile = async (file) => {
