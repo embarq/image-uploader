@@ -1,6 +1,6 @@
 <script setup>
   import { ref, computed } from 'vue'
-  import { uploadFile, getImageDisplayUrl, getAccessToken } from '@/lib/api'
+  import { uploadFile, getImageDisplayUrl, validateCaptcha } from '@/lib/api'
   import { blobToBase64, captchaReady } from '@/lib/utils'
   import { useClipboard } from '@vueuse/core'
   import FilePicker from './components/FilePicker.vue'
@@ -31,7 +31,7 @@
         RECAPTCHA_SITE_KEY,
         { action: 'upload' }
       )
-      const { payload } = await getAccessToken(captchaResponse)
+      const { payload } = await validateCaptcha(captchaResponse)
       const res = await uploadFile(file, payload.temp_token)
       const url = getImageDisplayUrl(res.payload)
       return url

@@ -25,7 +25,7 @@ export const getImageDisplayUrl = (filePayload) => {
  * @param {string} captchaResponse
  * @returns {Promise<{ status: 'success' | 'error', payload: { temp_token?: string } }>}
  */
-export const getAccessToken = (captchaResponse) => {
+export const validateCaptcha = (captchaResponse) => {
   /** @type {ReqeustInit} */
   const req = {
     method: 'POST',
