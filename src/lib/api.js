@@ -1,6 +1,18 @@
 const API_URL = import.meta.env.VITE_API_URL
 
-export const uploadFile = async (file, token) => {
+/**
+ * The method might be used to warp up the api.
+ *
+ * When apps deployed to free hostings, the hosting provider might put the service
+ * to sleep if it's not being used for a period of time.
+ * We can call the api to wake up our API earlier so that when a user
+ * interacts with our app it will respond quickly (hopefully).
+ */
+export const ping = () => {
+  return fetch(`${ API_URL }/`)
+}
+
+export const uploadFile = (file, token) => {
   const formData = new FormData()
   formData.append('files', file)
 

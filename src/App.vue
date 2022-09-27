@@ -1,6 +1,6 @@
 <script setup>
   import { ref, computed } from 'vue'
-  import { uploadFile, getImageDisplayUrl, validateCaptcha } from '@/lib/api'
+  import { uploadFile, getImageDisplayUrl, validateCaptcha, ping } from '@/lib/api'
   import { blobToBase64, captchaReady } from '@/lib/utils'
   import { useClipboard } from '@vueuse/core'
   import FilePicker from './components/FilePicker.vue'
@@ -15,6 +15,8 @@
   })
   const uploadLoading = ref(false)
   const uploadSuccess = ref(false)
+  const pingLoading = ref(false)
+  const serverOffline = ref(false)
   const { copy, isSupported } = useClipboard({ })
 
   const reset = () => {
@@ -83,6 +85,11 @@
 
     // TODO: show toast
   }
+
+  pingLoading.value = true
+  ping()
+    .then(() => pingLoading.value = false)
+    .catch(() => serverOffline.value = true)
 </script>
 
 <template>
@@ -128,6 +135,13 @@
       <button type="button" class="text-xs text-[#4F4F4F] font-medium" @click="reset">Start over</button>
     </div>
   </section>
+
+  <p
+    v-if="pingLoading"
+    class="mt-6 text-center text-xs text-[#4F4F4F]"
+    :class="{ 'animate-pulse': !serverOffline, 'text-red-500': serverOffline }">
+    {{ serverOffline ? 'Server is offline' : 'Server is loading' }}
+  </p>
 </main>
 </template>
 
