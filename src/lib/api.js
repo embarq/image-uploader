@@ -12,6 +12,22 @@ export const ping = () => {
   return fetch(`${ API_URL }/`)
 }
 
+/**
+ * Convert response body to json for corresponding content type
+ * @param {Response} res
+ * @returns {string|object}
+ */
+const handleResponse = (res) => {
+  const isJSON = res.headers.get('content-type').includes('application/json')
+  return isJSON ? res.json() : res.text()
+}
+
+/**
+ * Upload a file to the server
+ * @param {File} file
+ * @param {string} token
+ * @returns {Promise<{ name: string }>}
+ */
 export const uploadFile = (file, token) => {
   const formData = new FormData()
   formData.append('files', file)
@@ -26,7 +42,7 @@ export const uploadFile = (file, token) => {
   }
 
   return fetch(`${ API_URL }/v1/image/upload`, req)
-    .then(res => res.json())
+    .then(res => handleResponse(res))
 }
 
 export const getImageDisplayUrl = (filePayload) => {
@@ -50,5 +66,6 @@ export const validateCaptcha = (captchaResponse) => {
     })
   }
   return fetch(`${ API_URL }/v1/validate-recaptcha`, req)
+    .then(res => handleResponse(res))
     .then(res => res.json())
 }

@@ -1,4 +1,5 @@
 /**
+ * Cnovert blob to data-url
  * @returns {Promise<string>}
  */
  export const blobToBase64 = blob => {
