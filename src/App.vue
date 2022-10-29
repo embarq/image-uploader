@@ -62,10 +62,7 @@
       const url = await handleFileUpload(file)
 
       imageLink.value = url
-      imageUrl.value = await fetch(url, { mode: 'no-cors' })
-        .then(res => res.blob())
-        .then(blob => blobToBase64(blob))
-
+      imageUrl.value = url
       uploadLoading.value = false
       uploadSuccess.value = true
     } catch (error) {
@@ -95,12 +92,12 @@
 <template>
 <main class="w-full h-full pt-16 px-4 bg-[#FAFAFB] lg:grid lg:place-items-center">
   <section
-    class="w-full px-8 text-center bg-white shadow-md py-9 rounded-xl sm:max-w-sm"
+    class="w-full px-8 text-center bg-white shadow-md py-9 rounded-xl sm:max-w-sm sm:mx-auto"
     :class="(uploadLoading || uploadSuccess) && 'hidden'">
     <FilePicker @file="handleFile"></FilePicker>
   </section>
   <section
-    class="w-full px-8 text-center bg-white shadow-md py-9 rounded-xl sm:max-w-sm"
+    class="w-full px-8 text-center bg-white shadow-md py-9 rounded-xl sm:max-w-sm sm:mx-auto"
     :class="!uploadLoading && 'hidden'">
     <h2 class="text-lg">Uploading...</h2>
     <div class="relative overflow-x-hidden h-1.5 w-full mt-8 rounded-lg bg-[#F2F2F2]">
@@ -108,7 +105,7 @@
     </div>
   </section>
   <section
-    class="w-full px-8 text-center bg-white shadow-md py-9 rounded-xl sm:max-w-sm"
+    class="w-full px-8 text-center bg-white shadow-md py-9 rounded-xl sm:max-w-sm sm:mx-auto"
     :class="!uploadSuccess && 'hidden'">
     <div class="mx-auto w-max bg-[#219653] text-white rounded-full scale-150">
       <img src="@/assets/checkmark-white.svg" width="24" height="24" alt="" />

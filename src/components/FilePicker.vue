@@ -1,7 +1,12 @@
 <script setup>
-  import { ref } from 'vue'
+  import { computed } from '@vue/reactivity';
+import { ref } from 'vue'
   const emit = defineEmits([ 'file' ])
   const fileInputRef = ref()
+  const droppableHostActive = ref(false)
+  const droppableHostClass = computed(() => {
+    return droppableHostActive.value ? 'bg-gray-blueish bg-opacity-20' : ''
+  })
 
   const handleFileInputChange = (event) => {
     const file = event.target.files[0]
@@ -19,10 +24,6 @@
     }
   }
 
-  const handleDragOver = () => {
-
-  }
-
   const handleDrop = (event) => {
     const [ file ] = [ ...event.dataTransfer.files ]
     emit('file', file)
@@ -34,7 +35,9 @@
     <p class="mt-4 text-[0.625rem]">File should be jpeg, png or gif</p>
     <article
       class="grid w-full h-56 mt-8 border border-dashed border- place-items-center rounded-xl bg-gray-light border-gray-blueish"
-      @dragover.prevent="handleDragOver"
+      :class="droppableHostClass"
+      @dragover="droppableHostActive = true"
+      @dragleave="droppableHostActive = false"
       @drop.prevent="handleDrop">
       <div>
         <img src="@/assets/upload-area-img.svg" alt="" class="flex mx-auto" />
