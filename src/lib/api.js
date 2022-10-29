@@ -1,7 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL
 
 /**
- * The method might be used to warp up the api.
+ * The method might be used to warm up the api.
  *
  * When apps deployed to free hostings, the hosting provider might put the service
  * to sleep if it's not being used for a period of time.
