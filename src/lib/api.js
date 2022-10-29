@@ -67,5 +67,4 @@ export const validateCaptcha = (captchaResponse) => {
   }
   return fetch(`${ API_URL }/v1/validate-recaptcha`, req)
     .then(res => handleResponse(res))
-    .then(res => res.json())
 }
