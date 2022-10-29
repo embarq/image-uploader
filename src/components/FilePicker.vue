@@ -40,7 +40,7 @@ import { ref } from 'vue'
       @dragleave="droppableHostActive = false"
       @drop.prevent="handleDrop">
       <div>
-        <img src="@/assets/upload-area-img.svg" alt="" class="flex mx-auto" />
+        <img src="@/assets/upload-area-img.svg" alt="" class="flex mx-auto" width="115" height="90" />
         <p class="text-xs tracking-tight mt-9 text-gray-medium">Drag & Drop your image here</p>
       </div>
     </article>

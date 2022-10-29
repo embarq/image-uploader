@@ -90,7 +90,7 @@
 </script>
 
 <template>
-<main class="w-full h-full pt-16 px-4 bg-[#FAFAFB] lg:grid lg:place-items-center">
+<main class="w-full h-full pt-16 px-4 bg-[#FAFAFB] lg:grid lg:place-items-center lg:pt-0">
   <section
     class="w-full px-8 text-center bg-white shadow-md py-9 rounded-xl sm:max-w-sm sm:mx-auto"
     :class="(uploadLoading || uploadSuccess) && 'hidden'">
