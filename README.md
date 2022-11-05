@@ -2,7 +2,8 @@
 
 ![Preview](https://raw.githubusercontent.com/embarq/image-uploader/main/.github/preview.png)
 
-[Demo](https://image-uploader-oegp.onrender.com/)
+- [Demo](https://image-uploader-oegp.onrender.com/)
+- [API repo](https://github.com/embarq/image-uploader-api)
 
 The project contains a solution for the devchallenges.io challenge ["Image uploader"](https://devchallenges.io/challenges/O2iGT9yBd6xZBrOcVirx). A full description of the solution can be found [here](https://devchallenges.io/solutions/9Z3zphhpu9D9SEch8o44).
 
